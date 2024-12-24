@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Resume</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .resume-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            position: relative;
+            background-image: url("{{ student.college.image.url }}");
+            background-position: center;
+            background-size: cover;
+            color: white;
+        }
+        .page-title {
+            text-align: center;
+            font-size: 1.5em;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #333;
+        }
+        .photo {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .photo img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        h1, h2, h3 {
+            color: white;
+        }
+        .section {
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .introduction-section {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .introduction-text {
+            flex: 1;
+            padding-right: 20px;
+            color: white;
+        }
+        .feedback-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .feedback-form button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .feedback-form button:hover {
+            background: #0056b3;
+        }
+        .college-logo img {
+            border-radius: 8px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Title -->
+    <div class="page-title">
+        {{ student.name }}'s Resume
+    </div>
+
+    <div class="resume-container">
+        <div class="introduction-section">
+            <div class="photo">
+                {% if student.photo %}
+                    <img src="{{ student.photo.url }}" alt="{{ student.name }}">
+                {% else %}
+                    <img src="/static/images/default-profile.png" alt="Default Profile">
+                {% endif %}
+            </div>
+            <div class="introduction-text">
+                <h2>Introduction</h2>
+                <p>Enthusiastic student passionate about technology and innovation, currently pursuing a degree at {{ student.college.name }}.</p>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Skills</h2>
+            <ul>
+                <li>Programming Languages: Python, C++, Java</li>
+                <li>Web Development: HTML, CSS, JavaScript</li>
+                <li>Data Science Tools: Pandas, NumPy, Matplotlib</li>
+                <li>Embedded Systems: Arduino, Raspberry Pi</li>
+                <li>Signal Processing and Circuit Design</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Projects</h2>
+            <ul>
+                <li>Library Management System using Python</li>
+                <li>IoT-based Home Automation using Raspberry Pi</li>
+                <li>Website for Online Examination Platform</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Internships</h2>
+            <ul>
+                <li>Software Developer Intern at Tech Solutions</li>
+                <li>Embedded Systems Intern at Innovators Lab</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Achievements</h2>
+            <ul>
+                <li>Winner of Hackathon 2023</li>
+                <li>Top 5 in National Coding Challenge</li>
+                <li>Secured 2nd position in Circuit Design Contest</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Goals</h2>
+            <p>Aspire to become a leading software engineer and contribute to the development of cutting-edge technologies.</p>
+        </div>
+        <div class="section">
+            <h2>Feedback</h2>
+            <form method="POST" class="feedback-form">
+                <textarea name="feedback" rows="5" placeholder="Enter feedback for {{ student.name }}..." required></textarea>
+                <button type="submit">Submit Feedback</button>
+            </form>
+            <p><i>Note: This feedback will be sent to {{ student.email }}.</i></p>
+        </div>
+    </div>
+</body>
+</html>

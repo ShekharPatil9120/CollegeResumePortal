@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Select College and Candidate</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('vtu.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #ffda79;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        select {
+            background: #333;
+            color: #fff;
+        }
+        select:focus {
+            outline: none;
+            box-shadow: 0 0 5px #ffda79;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select College and Candidate</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <label for="college">College Name:</label>
+            <select id="college" name="college" required>
+                <option value="" disabled selected>Select a college</option>
+                {% for college in colleges %}
+                    <option value="{{ college.id }}">{{ college.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="student">Candidate Name:</label>
+            <select id="student" name="student" required>
+                <option value="" disabled selected>Select a candidate</option>
+            </select>
+
+            <button type="submit">View Resume</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript to handle college and student selection dynamically
+        const collegeSelect = document.getElementById('college');
+        const studentSelect = document.getElementById('student');
+        const studentsData = {{ students_json|safe }}; // Provided via Django context
+        
+        collegeSelect.addEventListener('change', function() {
+            const selectedCollegeId = this.value;
+
+            // Clear the student dropdown
+            studentSelect.innerHTML = '<option value="" disabled selected>Select a candidate</option>';
+            
+            // Populate the student dropdown based on the selected college
+            if (studentsData[selectedCollegeId]) {
+                studentsData[selectedCollegeId].forEach(student => {
+                    const option = document.createElement('option');
+                    option.value = student.id;
+                    option.textContent = student.name;
+                    studentSelect.appendChild(option);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
